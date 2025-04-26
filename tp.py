@@ -216,9 +216,9 @@ def main():
                 case "2":
                     en_contruccion()
                 case "3":
-                    choice_menu_ad_3 ()
+                    choice_menu_ad_3 () # hacer
                 case "4":
-                    choice_menu_ad_4 ()
+                    choice_menu_ad_4 () # hacer
                 
                 case "5":
                     os.system("cls")
