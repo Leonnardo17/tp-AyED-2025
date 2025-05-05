@@ -4,6 +4,13 @@ from datetime import date
 from datetime import datetime
 import calendar
 
+'''cont_arg, cont_chi, cont_bra,codNovedad0,codNovedad1,codNovedad2, length_num, codNovedad, dia, mes, anio, fecha_comparar, dias_en_el_mes, hoy, fecha_formateada, intentos:integer
+claveUsuario,nombreUsuario, textoNovedad0,textoNovedad1,textoNovedad2,fechaPublicacionNovedad0,fechaPublicacionNovedad1,fechaPublicacionNovedad2,
+fechaExpiracionNovedad0,fechaExpiracionNovedad1,fechaExpiracionNovedad2, last_option_letter, choice, nombre_aero,
+nombre_aero, codigoiata, descripcion, codigo_pais,fecha, codigo,header_cod, header_text, header_fecha_publi, header_fecha_expi, password, name,choice_menu :string
+aux : Bool
+'''
+
 claveUsuario = "admin"
 nombreUsuario = "admin@ventaspasajes777.com"
 cont_arg = 0
@@ -12,21 +19,21 @@ cont_bra = 0
 
 codNovedad0 = 1
 textoNovedad0 = "Reapertura de Local de regalos"
-fechaPublicacionNovedad0 = "05-15-25"
-fechaExpiracionNovedad0 = "05-20-25"
+fechaPublicacionNovedad0 = "2025-05-10"
+fechaExpiracionNovedad0 = "2025-05-11"
 
 codNovedad1 = 2
 textoNovedad1 = "Promos de Vuelos a Brasil"
-fechaPublicacionNovedad1 = "05-15-25"
-fechaExpiracionNovedad1 = "05-30-25"
+fechaPublicacionNovedad1 = "2025-05-22"
+fechaExpiracionNovedad1 = "2025-05-30"
 
 codNovedad2 = 3
 textoNovedad2 = "Vuelos hacia chile atrasados"
-fechaPublicacionNovedad2 = "05-18-25"
-fechaExpiracionNovedad2 = "05-25-25"
+fechaPublicacionNovedad2 = "2025-02-11"
+fechaExpiracionNovedad2 = "2025-04-11"
 
   
-def menu_administrador():
+def menu_administrador(): #printeo del menu de usuario tipo administrador
     os.system("cls")
     print("1. Gestión de Aerolíneas")
     print("2. Aprobar/Denegar Promociones")
@@ -34,14 +41,14 @@ def menu_administrador():
     print("4. Reportes")
     print("5. Salir")
     
-def menu_admin_1():
+def menu_admin_1(): #printeo del sub menu 1 del usurio tipo administrador
     os.system("cls")
     print("a. Crear Aerolínea")
     print("b. Modificar Aerolínea")
     print("c. Eliminar Aerolínea")
     print("d. Volver")
 
-def menu_admin_3():
+def menu_admin_3(): #printeo del sub menu 3 del usurio tipo administrador
     os.system("cls")
     print("a. Crear Novedad")
     print("b. Modificar Novedad")
@@ -49,7 +56,7 @@ def menu_admin_3():
     print("d. Ver Novedades")
     print("e. Volver")
 
-def menu_admin_4():
+def menu_admin_4(): #printeo del sub menu 4 del usurio tipo administrador
     os.system("cls")
     print("a. Reporte de Ventas (reservas con estado “confirmada”)")
     print("b. Reporte de Vuelos")
@@ -61,10 +68,10 @@ def en_contruccion():
     print("--- En construccion ---")
     input("presiona cualquier tecla para continuar")
 
-def val_choice(last_option_letter, choice):
+def val_choice(last_option_letter, choice): #verificando si los inputs de las selecciones de los menus estan dentro de los correspondiente
     aux = False
-    if choice >= "a" and choice <= last_option_letter:
-        aux = True
+    if choice >= "a" and choice <= last_option_letter: #last_option_letter define hasta que letra es la condicion ej: desde "a" hasta "b", siendo b la variable last_option_letter
+        aux = True #si es correcto se devuelve true
     return aux
         
     
@@ -75,7 +82,7 @@ def choice_menu_ad_1():
         menu_admin_1()
         choice = input("Ingrese una opcion: ").lower()
         aux = val_choice("d", choice)
-        while  aux != True:
+        while  aux != True: #si no es true es que no se verifica y se entra en bucle hasta que el operador coloque una opcion valida
             os.system("cls")
             print("--- opcion invalida ---")
             input("presiona cualquier tecla para continuar")
@@ -85,7 +92,7 @@ def choice_menu_ad_1():
             
         match choice:
             case "a":
-                crear_aero()
+                crear_aero() #crear aerolinea
             case "b":
                 en_contruccion()
             case "c":
@@ -93,31 +100,31 @@ def choice_menu_ad_1():
                 
    
                 
-def crear_aero():
+def crear_aero(): #creando aerolina
     global cont_arg,cont_bra,cont_chi
     nombre_aero = ""
-    while nombre_aero != "0":
+    while nombre_aero != "0": #con cero se termina el ingreso de aerolineas
         os.system("cls")
         print("------ INGRESE 0 PARA SALIR ------")
         nombre_aero = input("Ingrese el nombre de la aerolinea: ")
         if nombre_aero != "0":
             os.system("cls")
             codigoiata = input("Ingrese el Codigo IATA: ")
-            while len(codigoiata) > 3 :
+            while len(codigoiata) > 3 : #verificando que tenga maximo 3 caracteres
                 os.system("cls")
                 print("CANTIDAD MAXIMA DE CARACTERES: 3")
                 codigoiata = input("Ingrese el Codigo IATA: ")
             os.system("cls")
-            descripcion = input("Ingrese una descripcion: ")
+            descripcion = input("Ingrese una descripcion: ") #de momento la descripcion no tiene uso
             os.system("cls")
             print("Ingrese el codigo del pais")
             codigo_pais = input("ARGENTINA = ARG , CHILE =CHI , Brasil = BRA\n").upper()
-            while codigo_pais != "ARG" and codigo_pais != "CHI" and codigo_pais != "BRA":
+            while codigo_pais != "ARG" and codigo_pais != "CHI" and codigo_pais != "BRA": #verificando que el operador escribio el codigo del pais correctamente
                 os.system("cls")
                 print("----- Codigo incorrecto -----\n")
                 print("Ingrese el codigo del pais")
                 codigo_pais = input("ARGENTINA = ARG , CHILE = CHI , Brasil = BRA\n").upper()
-            if codigo_pais == "ARG":
+            if codigo_pais == "ARG": # estos contadores se encargan de llevar la cuenta de las aerolineas
                 cont_arg += 1
             elif codigo_pais == "CHI":
                 cont_chi += 1
@@ -197,7 +204,7 @@ def crear_aero():
         input("presione cualquier letra para continuar")
  
  
-def choice_menu_ad_3():
+def choice_menu_ad_3(): #toma de deciciones del submenu 3 del menu de administradores
     
     choice = " "
     while choice != "e":
@@ -216,13 +223,13 @@ def choice_menu_ad_3():
             case "a":
                 en_contruccion()
             case "b":
-                edit_nov()
+                edit_nov() #editar novedades
             case "c":
                 en_contruccion()
             case "d":
-                show_nov() 
+                show_nov() #mostrar novedades
 
-def val_num(x):
+def val_num(x): 
     aux = True
     length_num = len(x)
     for i in range (0,length_num): #vericando que cada digito es un numero
@@ -262,28 +269,28 @@ def edit_nov():
  
   
 def val_fecha(fecha_comparar,x):
-    
-    dia = 0
-    cont = 0
     fecha = ""
-    dias_en_el_mes = calendar.monthrange(fecha_comparar.year, fecha_comparar.month)[1]
-    while dia < fecha_comparar.day or dia > dias_en_el_mes :
+    #verifico el año primero
+    cont = 0
+    anio = 0
+    while anio < fecha_comparar.year:
         os.system("cls")
         if cont>0:
-            print("----- INGRESE UN DIA VALIDO ------")
-        print("Ingresando fecha ")
-        dia = input(f"ingrese el dia en que esta novedad se va a {x}: ")
-        aux = val_num(dia)
+            print("----- INGRESE UN AÑO VALIDO ------")
+        print("Ingresando fecha ", fecha)
+        anio = input(f"ingrese el año en que esta novedad se va a {x}: ")
+        aux = val_num(anio)
         while aux != True :
             os.system("cls")
             print("-----Ingrese un numero correcto ----")
-            print("Ingresando fecha ")
-            dia = input(f"ingrese el dia en que esta novedad se va a {x}: ")
-            aux = val_num(dia)
-        dia = int(dia)
+            print("Ingresando fecha ",fecha)
+            anio = input(f"ingrese el año en que esta novedad se va a {x}: ")
+            aux = val_num(anio)
+        anio = int(anio)
         cont += 1
-        
-    fecha = str(dia) + "-"
+    fecha = str(anio)  + "-"
+    
+    #ahora el mes
     cont = 0
     mes = 0 
     
@@ -303,25 +310,30 @@ def val_fecha(fecha_comparar,x):
         mes = int(mes)
         cont += 1
     
-    fecha += str(mes) + "-"
+    fecha += str(mes) + "-" 
+    
+    #ahora el dia, se hace asi porque de esa manera el programa puede saber el mes y el año con cual comparar y asi evitar que el que queden fechas con dias como feb 31 xd 
+    dia = 0
     cont = 0
-    anio = 0
-    while anio < fecha_comparar.year:
+    dias_en_el_mes = calendar.monthrange(anio, mes)[1] #dias que contiene un mes en especifico
+    while dia < fecha_comparar.day or dia > dias_en_el_mes :
         os.system("cls")
         if cont>0:
-            print("----- INGRESE UN AÑO VALIDO ------")
+            print("----- INGRESE UN DIA VALIDO ------")
         print("Ingresando fecha ", fecha)
-        anio = input(f"ingrese el año en que esta novedad se va a {x}: ")
-        aux = val_num(anio)
+        dia = input(f"ingrese el dia en que esta novedad se va a {x}: ")
+        aux = val_num(dia)
         while aux != True :
             os.system("cls")
             print("-----Ingrese un numero correcto ----")
-            print("Ingresando fecha ",fecha)
-            anio = input(f"ingrese el año en que esta novedad se va a {x}: ")
-            aux = val_num(anio)
-        anio = int(anio)
+            print("Ingresando fecha ", fecha)
+            dia = input(f"ingrese el dia en que esta novedad se va a {x}: ")
+            aux = val_num(dia)
+        dia = int(dia)
         cont += 1
-    fecha += str(anio)   
+        
+    fecha += str(dia)
+    
     return fecha
 
     
@@ -339,11 +351,11 @@ def edit_nov_0(): #editor novedad numero 1
     codNovedad0 = int(codigo) #codigo editado
     
     os.system("cls")
-    textoNovedad0 = input("Ingrese el nuevo texto para la novedad: ")
-    hoy = date.today()
-    fechaPublicacionNovedad0 = val_fecha(hoy,"publicar")
-    fecha_formateada = datetime.strptime(fechaPublicacionNovedad0, "%d-%m-%Y").date()
-    fechaExpiracionNovedad0 = val_fecha(fecha_formateada,"expirar")
+    textoNovedad0 = input("Ingrese el nuevo texto para la novedad: ") #texto editado
+    hoy = date.today() #dia de hoy
+    fechaPublicacionNovedad0 = val_fecha(hoy,"publicar") #fecha editada
+    fecha_formateada = datetime.strptime(fechaPublicacionNovedad0, "%Y-%m-%d").date() #darle formato _date YYYY-MM-DD
+    fechaExpiracionNovedad0 = val_fecha(fecha_formateada,"expirar") #fecha editada
     
     
     
@@ -363,7 +375,7 @@ def edit_nov_1():  #editor novedad numero 2
     textoNovedad1 = input("Ingrese el nuevo texto para la novedad: ")
     hoy = date.today()
     fechaPublicacionNovedad1 = val_fecha(hoy,"publicar")
-    fecha_formateada = datetime.strptime(fechaPublicacionNovedad1, "%d-%m-%Y").date()
+    fecha_formateada = datetime.strptime(fechaPublicacionNovedad1, "%Y-%m-%d").date()
     fechaExpiracionNovedad1 = val_fecha(fecha_formateada,"expirar")
 
 def edit_nov_2():  #editor novedad numero 3
@@ -382,10 +394,10 @@ def edit_nov_2():  #editor novedad numero 3
     textoNovedad2 = input("Ingrese el nuevo texto para la novedad: ")
     hoy = date.today()
     fechaPublicacionNovedad2 = val_fecha(hoy,"publicar")
-    fecha_formateada = datetime.strptime(fechaPublicacionNovedad2, "%d-%m-%Y").date()
+    fecha_formateada = datetime.strptime(fechaPublicacionNovedad2, "%Y-%m-%d").date()
     fechaExpiracionNovedad2 = val_fecha(fecha_formateada,"expirar")
     
-def show_nov():
+def show_nov(): #printeo de todas las novedades
     global codNovedad0, textoNovedad0, fechaPublicacionNovedad0, fechaExpiracionNovedad0
     global codNovedad1, textoNovedad1, fechaPublicacionNovedad1, fechaExpiracionNovedad1
     global codNovedad2, textoNovedad2, fechaPublicacionNovedad2, fechaExpiracionNovedad2
@@ -404,7 +416,7 @@ def show_nov():
     print(f"{codNovedad2:<10} | {textoNovedad2:<50} | {fechaExpiracionNovedad2:<20} | {fechaExpiracionNovedad2:<20}")
     input("\nPresione cualquier tecla para continuar")
 
-def choice_menu_ad_4 ():
+def choice_menu_ad_4 ():#menu reportes en construccion
     choice = " "
     while choice != "e":
         menu_admin_4()
@@ -420,11 +432,11 @@ def choice_menu_ad_4 ():
         if choice != "d":
             en_contruccion()      
     
-def main():
-    intentos = 3
+def main(): #funcion principal
+    intentos = 3 #intentos de ingreso de contraseña
     aux = False
     
-    while aux != True and intentos > 0 :
+    while aux != True and intentos > 0 : #no se sale de while hasta que se terminen los intentos, es decir, intentos == 0, o se coloque bien la contraseña
         os.system("cls")
         print(f"cantidad de intentos restantes: {intentos}")
         name = input("Ingrese el nombre de usuario: ")
@@ -446,7 +458,7 @@ def main():
             
             
             
-    if aux != False:
+    if aux != False: #si el auxiliar es True se coloco bien tanto la contraseña como el correo y se prosigue con el programa
         choice_menu = ""
         while choice_menu != "5":
             menu_administrador()
@@ -460,17 +472,17 @@ def main():
 
             match choice_menu:
                 case "1":
-                    choice_menu_ad_1 ()
+                    choice_menu_ad_1 () #yendo a la toma de deciciones del menu 1
                 case "2":
                     en_contruccion()
                 case "3":
-                    choice_menu_ad_3 () # hacer
+                    choice_menu_ad_3 () #yendo a la toma de deciciones del menu 3
                 case "4":
-                    choice_menu_ad_4 () # hacer
+                    choice_menu_ad_4 () #yendo a la toma de deciciones del menu 4
                 
                 case "5":
                     os.system("cls")
-                    print("--- Gracias por usar nuestro servicio ---") 
+                    print("--- Gracias por usar nuestro servicio ---") # si se elige 5 se termina el programa
                        
             
     else:
