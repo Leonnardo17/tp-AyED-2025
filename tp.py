@@ -4,9 +4,9 @@ from datetime import date
 from datetime import datetime
 import calendar
 
-'''cont_arg, cont_chi, cont_bra,codNovedad0,codNovedad1,codNovedad2, length_num, codNovedad, dia, mes, anio, fecha_comparar, dias_en_el_mes, hoy, fecha_formateada, intentos:integer
-claveUsuario,nombreUsuario, textoNovedad0,textoNovedad1,textoNovedad2,fechaPublicacionNovedad0,fechaPublicacionNovedad1,fechaPublicacionNovedad2, fechaExpiracionNovedad0,fechaExpiracionNovedad1,fechaExpiracionNovedad2, last_option_letter, choice, nombre_aero,nombre_aero, codigoiata, descripcion, codigo_pais,fecha, codigo,header_cod, header_text, header_fecha_publi, header_fecha_expi, password, name,choice_menu :string
-aux : Bool
+'''cont_arg, cont_chi, cont_bra,codNovedad0,codNovedad1,codNovedad2, length_num, codNovedad, dia, mes, anio, fecha_comparar, dias_en_el_mes, hoy, fecha_formateada, intentos, valor_minimo, valor_maximo :integer
+claveUsuario,nombre_maximo, nombre_minino,nombres_maximos, nombres_mininos, nombreUsuario, textoNovedad0,textoNovedad1,textoNovedad2,fechaPublicacionNovedad0,fechaPublicacionNovedad1,fechaPublicacionNovedad2, fechaExpiracionNovedad0,fechaExpiracionNovedad1,fechaExpiracionNovedad2, last_option_letter, choice, nombre_aero,nombre_aero, codigoiata, descripcion, codigo_pais,fecha, codigo,header_cod, header_text, header_fecha_publi, header_fecha_expi, password, name,choice_menu, dia_ingreso, mes_ingreso, anio_ingreso, :string
+aux,empate_maximo,  empate_minimo, aux_contra: Bool 
 '''
 
 claveUsuario = "admin"
