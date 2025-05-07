@@ -278,17 +278,18 @@ def val_fecha(fecha_comparar,x):
         if cont>0:
             print("----- INGRESE UN AÑO VALIDO ------")
         print("Ingresando fecha ", fecha)
-        anio = input(f"ingrese el año en que esta novedad se va a {x}: ")
-        aux = val_num(anio)
+        anio_ingreso = input(f"ingrese el año en que esta novedad se va a {x}: ")
+        aux = val_num(anio_ingreso)
         while aux != True :
             os.system("cls")
             print("-----Ingrese un numero correcto ----")
             print("Ingresando fecha ",fecha)
-            anio = input(f"ingrese el año en que esta novedad se va a {x}: ")
-            aux = val_num(anio)
-        anio = int(anio)
+            anio_ingreso = input(f"ingrese el año en que esta novedad se va a {x}: ")
+            aux = val_num(anio_ingreso)
+        anio = int(anio_ingreso)
         cont += 1
-    fecha = str(anio)  + "-"
+    
+    fecha = anio_ingreso  + "-"
     
     #ahora el mes
     cont = 0
@@ -299,18 +300,21 @@ def val_fecha(fecha_comparar,x):
         if cont>0:
             print("----- INGRESE UN MES VALIDO ------")
         print("Ingresando fecha ", fecha)
-        mes = input(f"ingrese el mes en que esta novedad se va a {x}: ")
-        aux = val_num(mes)
+        mes_ingreso = input(f"ingrese el mes en que esta novedad se va a {x}: ")
+        aux = val_num(mes_ingreso)
         while aux != True :
             os.system("cls")
             print("-----Ingrese un numero correcto ----")
             print("Ingresando fecha ",fecha)
-            mes = input(f"ingrese el mes en que esta novedad se va a {x}: ")
-            aux = val_num(mes)
-        mes = int(mes)
+            mes_ingreso = input(f"ingrese el mes en que esta novedad se va a {x}: ")
+            aux = val_num(mes_ingreso)
+        mes = int(mes_ingreso)
         cont += 1
     
-    fecha += str(mes) + "-" 
+    if mes_ingreso.len() != 0:
+        fecha += mes_ingreso + "-" 
+    else:
+        fecha += +"0" + mes_ingreso + "-"
     
     #ahora el dia, se hace asi porque de esa manera el programa puede saber el mes y el año con cual comparar y asi evitar que el que queden fechas con dias como feb 31 xd 
     dia = 0
@@ -321,18 +325,20 @@ def val_fecha(fecha_comparar,x):
         if cont>0:
             print("----- INGRESE UN DIA VALIDO ------")
         print("Ingresando fecha ", fecha)
-        dia = input(f"ingrese el dia en que esta novedad se va a {x}: ")
-        aux = val_num(dia)
+        dia_ingreso = input(f"ingrese el dia en que esta novedad se va a {x}: ")
+        aux = val_num(dia_ingreso)
         while aux != True :
             os.system("cls")
             print("-----Ingrese un numero correcto ----")
             print("Ingresando fecha ", fecha)
-            dia = input(f"ingrese el dia en que esta novedad se va a {x}: ")
-            aux = val_num(dia)
-        dia = int(dia)
+            dia_ingreso = input(f"ingrese el dia en que esta novedad se va a {x}: ")
+            aux = val_num(dia_ingreso)
+        dia = int(dia_ingreso)
         cont += 1
-        
-    fecha += str(dia)
+    if dia_ingreso.len() != 0:  
+        fecha += dia_ingreso
+    else:
+        fecha += "0" + dia_ingreso
     
     return fecha
 
