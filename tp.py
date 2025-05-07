@@ -1,13 +1,11 @@
-import maskpass
+import msvcrt
 import os
 from datetime import date
 from datetime import datetime
 import calendar
 
 '''cont_arg, cont_chi, cont_bra,codNovedad0,codNovedad1,codNovedad2, length_num, codNovedad, dia, mes, anio, fecha_comparar, dias_en_el_mes, hoy, fecha_formateada, intentos:integer
-claveUsuario,nombreUsuario, textoNovedad0,textoNovedad1,textoNovedad2,fechaPublicacionNovedad0,fechaPublicacionNovedad1,fechaPublicacionNovedad2,
-fechaExpiracionNovedad0,fechaExpiracionNovedad1,fechaExpiracionNovedad2, last_option_letter, choice, nombre_aero,
-nombre_aero, codigoiata, descripcion, codigo_pais,fecha, codigo,header_cod, header_text, header_fecha_publi, header_fecha_expi, password, name,choice_menu :string
+claveUsuario,nombreUsuario, textoNovedad0,textoNovedad1,textoNovedad2,fechaPublicacionNovedad0,fechaPublicacionNovedad1,fechaPublicacionNovedad2, fechaExpiracionNovedad0,fechaExpiracionNovedad1,fechaExpiracionNovedad2, last_option_letter, choice, nombre_aero,nombre_aero, codigoiata, descripcion, codigo_pais,fecha, codigo,header_cod, header_text, header_fecha_publi, header_fecha_expi, password, name,choice_menu :string
 aux : Bool
 '''
 
@@ -98,7 +96,79 @@ def choice_menu_ad_1():
             case "c":
                 en_contruccion()
                 
-   
+def printeo_max_min():
+    global cont_arg,cont_chi,cont_bra
+    
+    valor_maximo = 0
+    nombre_maximo = ""
+    empate_maximo = False
+    
+    valor_minimo = 0 
+    nombre_minino = ""
+    empate_minimo = False
+    os.system("cls")
+    #Determinando el pais con mas aerolineas
+    if (cont_arg >= cont_bra and cont_arg >= cont_chi):
+        valor_maximo = cont_arg
+        nombre_maximo = "Argentina"
+        empate_maximo = (cont_arg == cont_bra) or (cont_arg == cont_chi)
+    elif(cont_bra >= cont_arg and cont_bra >= cont_chi):
+        valor_maximo = cont_bra
+        nombre_maximo = "Brasil"
+        empate_maximo = (cont_bra == cont_arg) or (cont_bra == cont_chi)
+    else:
+        valor_maximo = cont_chi
+        nombre_maximo = "Chile"
+        empate_maximo = (cont_chi == cont_arg) or (cont_chi == cont_bra)
+    
+    #determinando el pais con menos aerolineas
+    if (cont_arg <= cont_bra and cont_arg <= cont_chi):
+        valor_minimo = cont_arg
+        nombre_minino = "Argentina"
+        empate_minimo = (cont_arg == cont_bra) or (cont_arg == cont_chi)
+    elif(cont_bra <= cont_arg and cont_bra <= cont_chi):
+        valor_minimo = cont_bra
+        nombre_minino = "Brasil"
+        empate_minimo = (cont_bra == cont_arg) or (cont_bra == cont_chi)
+    else:
+        valor_minimo = cont_chi
+        nombre_minino = "Chile"
+        empate_minimo = (cont_chi == cont_arg) or (cont_chi == cont_bra)
+        
+    #verificando que todos o algunos sean iguales
+    if (cont_arg == cont_bra == cont_chi):
+        print(f"Todos los paises tiene la misma cantidad de aerolineas: {cont_arg}")
+    else:
+        
+        if(empate_maximo): #determinado los maximos igaules
+            nombres_maximos = nombre_maximo
+            if ("Argentina" != nombre_maximo and cont_arg == valor_maximo):
+                nombre_maximo += " y Argentina"
+            elif("Brasil" != nombre_maximo and cont_bra == valor_maximo):
+                nombre_maximo += " y Brasil"
+            elif("Chile" != nombre_maximo and cont_chi == valor_maximo):
+                nombre_maximo += " y Chile"
+                
+            print(f"Los paises con mas aerolineas son {nombres_maximos} y cuentan con: {valor_maximo} aerolines cada uno")
+        else:
+            print(f"El pais con mas aerolineas es {nombre_maximo} y cuenta con {valor_maximo} aerolineas")
+            
+        if(empate_minimo): #determinando los minimos iguales
+            nombres_minimos = nombre_minino
+            if ("Argentina" != nombre_minino and cont_arg == valor_minimo):
+                nombres_minimos += " y Argentina"
+            elif("Brasil" != nombre_maximo and cont_bra == valor_minimo):
+                nombres_minimos += " y Brasil"
+            elif("Chile" != nombre_minino and cont_chi == valor_minimo):
+                nombres_minimos += " y Chile"
+                
+            print(f"Los paises con menor contidad de aerolineas son {nombres_minimos} y cuentan con {valor_minimo} aerolineas cada uno")
+        
+        else:
+            print(f"El pais con menos cantidad de aerolines es {nombre_minino} y cuenta con {valor_minimo} aerolineas")
+            
+    input("\nPresione enter para continuar")
+
                 
 def crear_aero(): #creando aerolina
     global cont_arg,cont_bra,cont_chi
@@ -131,77 +201,7 @@ def crear_aero(): #creando aerolina
             else:
                 cont_bra += 1
                 
-                
-    #verifico primero si los tres contadores son distintos           
-    if cont_arg != cont_chi: 
-        if cont_arg != cont_bra:
-            if cont_bra != cont_chi:
-                if cont_arg < cont_chi: # si lo son se procede a ver cual es el menor y cual es el mayor
-                    if cont_chi < cont_bra:
-                        os.system("cls")
-                        print(f"codigo del pais que mas cantidad de aerolineas tiene es BRA con {cont_bra} aerolineas")
-                        print(f"codigo del pais que menos cantidad de aerolineas tiene es ARG con {cont_arg} aerolineas")
-                        input("presione cualquier letra para continuar")
-                    elif cont_arg < cont_bra:
-                        os.system("cls")
-                        print(f"codigo del pais que mas cantidad de aerolineas tiene es CHI con{cont_chi}  aerolineas")
-                        print(f"codigo del pais que menos cantidad de aerolineas tiene es ARG con {cont_arg} aerolineas")
-                        input("presione cualquier letra para continuar")
-                    else:
-                        os.system("cls")
-                        print(f"codigo del pais que mas cantidad de aerolineas tiene es CHI con {cont_chi} aerolineas")
-                        print(f"codigo del pais que menos cantidad de aerolineas tiene es BRA con {cont_bra}  aerolineas")
-                        input("presione cualquier letra para continuar")
-                elif cont_arg < cont_bra:
-                    os.system("cls")
-                    print(f"codigo del pais que mas cantidad de aerolineas tiene es BRA con {cont_bra} aerolineas")
-                    print(f"codigo del pais que menos cantidad de aerolineas tiene es CHI  con{cont_chi} aerolineas")
-                    input("presione cualquier letra para continuar")
-                    
-                else:
-                    os.system("cls")
-                    print(f"codigo de pais que mas cantidad de aerolineas tiene es ARG con {cont_arg} aerolineas")
-                    if cont_chi < cont_bra:
-                        print(f"codigo del pais que menos cantidad de aerolineas tiene es CHI con {cont_chi} aerolineas")
-                        input("presione cualquier letra para continuar")
-                    else:
-                        print(f"codigo del pais que menos cantidad de aerolineas tiene es BRA con {cont_bra} aerolineas")
-                        input("presione cualquier letra para continuar")
-            elif cont_bra < cont_arg: #caso en donde brasil y chile son iguales, pregunto si argentina es mayor
-                os.system("cls")
-                print(f"codigo de pais que mas cantidad de aerolineas tiene es ARG con {cont_arg} aerolineas")
-                print(f"tanto BRA como CHI tienen la misma cantidad de aerolineas: {cont_chi}")
-                input("presione cualquier letra para continuar")
-            else:
-                os.system("cls")
-                print(f"tanto BRA como CHI tienen la misma cantidad de aerolineas: {cont_arg}")
-                print(f"codigo de pais que menos cantidad de aerolineas tiene es ARG con {cont_arg} aerolineas")
-                input("presione cualquier letra para continuar")
-                
-        elif cont_arg < cont_chi: #caso en donde argentina y brasil son iguales, pregunto si chile es mayor a ellos
-            os.system("cls")
-            print(f"codigo del pais que mas cantidad de aerolineas tiene es CHI con {cont_chi} aerolineas")
-            print(f"tanto BRA como ARG tienen la misma cantidad de aerolineas: {cont_arg}")
-            input("presione cualquier letra para continuar")
-        else:
-            os.system("cls")
-            print(f"tanto BRA como ARG tienen la misma cantidad de aerolineas: {cont_arg}")
-            print(f"codigo del pais que menos cantidad de aerolineas tiene es CHI con {cont_chi} aerolineas")
-            input("presione cualquier letra para continuar")
-    elif cont_arg != cont_bra: # caso en donde argentina y chile son iguales
-        os.system("cls")
-        if cont_arg < cont_bra:
-            print(f"codigo del pais que mas cantidad de aerolineas tiene es BRA con {cont_bra} aerolineas")
-            print(f"tanto CHI como ARG tienen la misma cantidad de aerolineas: {cont_arg}")
-            input("presione cualquier letra para continuar")
-        else:
-            print(f"tanto BRA como ARG tienen la misma cantidad de aerolineas: {cont_arg}")
-            print(f"codigo del pais que menos cantidad de aerolineas tiene es BRA con {cont_bra} aerolineas")
-            input("presione cualquier letra para continuar")
-    else: #son todos iguales
-        os.system("cls")
-        print(f"todas los codigos tienen la misma cantidad de aerolineas: {cont_arg} ")
-        input("presione cualquier letra para continuar")
+    printeo_max_min()
  
  
 def choice_menu_ad_3(): #toma de deciciones del submenu 3 del menu de administradores
@@ -407,13 +407,13 @@ def show_nov(): #printeo de todas las novedades
     header_fecha_publi = "Fecha de publicacion"
     header_fecha_expi = "Fecha de expiracion"
     os.system("cls")
-    print(f"{header_cod:<10} | {header_text:<50} | {header_fecha_publi:<20} | {header_fecha_expi:<20}")
-    print("-" * 115)
-    print(f"{codNovedad0:<10} | {textoNovedad0:<50} | {fechaPublicacionNovedad0:<20} | {fechaExpiracionNovedad0:<20}")
-    print("-" * 115)
-    print(f"{codNovedad1:<10} | {textoNovedad1:<50} | {fechaPublicacionNovedad1:<20} | {fechaExpiracionNovedad1:<20}")
-    print("-" * 115)
-    print(f"{codNovedad2:<10} | {textoNovedad2:<50} | {fechaExpiracionNovedad2:<20} | {fechaExpiracionNovedad2:<20}")
+    print(f"{header_cod:<10} | {header_text:<100} | {header_fecha_publi:<20} | {header_fecha_expi:<20}")
+    print("-" * 170)
+    print(f"{codNovedad0:<10} | {textoNovedad0:<100} | {fechaPublicacionNovedad0:<20} | {fechaExpiracionNovedad0:<20}")
+    print("-" * 170)
+    print(f"{codNovedad1:<10} | {textoNovedad1:<100} | {fechaPublicacionNovedad1:<20} | {fechaExpiracionNovedad1:<20}")
+    print("-" * 170)
+    print(f"{codNovedad2:<10} | {textoNovedad2:<100} | {fechaExpiracionNovedad2:<20} | {fechaExpiracionNovedad2:<20}")
     input("\nPresione cualquier tecla para continuar")
 
 def choice_menu_ad_4 ():#menu reportes en construccion
@@ -431,7 +431,26 @@ def choice_menu_ad_4 ():#menu reportes en construccion
             aux = val_choice("d", choice)
         if choice != "d":
             en_contruccion()      
-    
+
+def ingreso_pass():
+    os.system("cls")
+    print("Ingrese su contraseña: ", end='', flush=True)
+    password = ""
+    aux_contra = True
+    while aux_contra != False:
+        tecla = msvcrt.getch() #funcion que detecta la tecla que toca el operador
+            
+        if tecla == b'\r':  # detecta el Enter
+            aux_contra = False
+        elif tecla == b'\x08':  # detecta el Backspace
+            if len(password) > 0:# se verifica que existe por lo menos un digito
+                password = password[:-1] # borra el utlimo caracter de la cadena
+                print('\b \b', end='', flush=True) #se borra el ultimo asterisco
+        else:
+            password += tecla.decode("utf-8") #tecla estaria en bits de los valores ascii, con decode('utf-8) pasa la letra que 
+            print('*', end='', flush=True) # se printean los asteriscos en vez de las letras
+    return password
+  
 def main(): #funcion principal
     intentos = 3 #intentos de ingreso de contraseña
     aux = False
@@ -440,8 +459,7 @@ def main(): #funcion principal
         os.system("cls")
         print(f"cantidad de intentos restantes: {intentos}")
         name = input("Ingrese el nombre de usuario: ")
-        os.system("cls")
-        password = maskpass.askpass("ingrese la contraseña: ")
+        password = ingreso_pass()
         if name == nombreUsuario:
             if password == claveUsuario:
                 aux = True
@@ -455,9 +473,7 @@ def main(): #funcion principal
             os.system("cls")
             print("--- contraseña o usuario incorrecta/s ---")
             input("presiona cualquier tecla para continuar")
-            
-            
-            
+               
     if aux != False: #si el auxiliar es True se coloco bien tanto la contraseña como el correo y se prosigue con el programa
         choice_menu = ""
         while choice_menu != "5":
