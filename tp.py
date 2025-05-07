@@ -278,13 +278,13 @@ def val_fecha(fecha_comparar,x):
         if cont>0:
             print("----- INGRESE UN AÑO VALIDO ------")
         print("Ingresando fecha ", fecha)
-        anio_ingreso = input(f"ingrese el año en que esta novedad se va a {x}: ")
+        anio_ingreso = input(f"ingrese el año en que esta novedad va a {x}: ")
         aux = val_num(anio_ingreso)
         while aux != True :
             os.system("cls")
             print("-----Ingrese un numero correcto ----")
             print("Ingresando fecha ",fecha)
-            anio_ingreso = input(f"ingrese el año en que esta novedad se va a {x}: ")
+            anio_ingreso = input(f"ingrese el año en que esta novedad va a {x}: ")
             aux = val_num(anio_ingreso)
         anio = int(anio_ingreso)
         cont += 1
@@ -300,18 +300,18 @@ def val_fecha(fecha_comparar,x):
         if cont>0:
             print("----- INGRESE UN MES VALIDO ------")
         print("Ingresando fecha ", fecha)
-        mes_ingreso = input(f"ingrese el mes en que esta novedad se va a {x}: ")
+        mes_ingreso = input(f"ingrese el mes en que esta novedad va a {x}: ")
         aux = val_num(mes_ingreso)
         while aux != True :
             os.system("cls")
             print("-----Ingrese un numero correcto ----")
             print("Ingresando fecha ",fecha)
-            mes_ingreso = input(f"ingrese el mes en que esta novedad se va a {x}: ")
+            mes_ingreso = input(f"ingrese el mes en que esta novedad va a {x}: ")
             aux = val_num(mes_ingreso)
         mes = int(mes_ingreso)
         cont += 1
     
-    if mes_ingreso.len() != 0:
+    if mes_ingreso.len() != 1:
         fecha += mes_ingreso + "-" 
     else:
         fecha += +"0" + mes_ingreso + "-"
@@ -335,7 +335,7 @@ def val_fecha(fecha_comparar,x):
             aux = val_num(dia_ingreso)
         dia = int(dia_ingreso)
         cont += 1
-    if dia_ingreso.len() != 0:  
+    if dia_ingreso.len() != 1:  
         fecha += dia_ingreso
     else:
         fecha += "0" + dia_ingreso
@@ -359,7 +359,7 @@ def edit_nov_0(): #editor novedad numero 1
     os.system("cls")
     textoNovedad0 = input("Ingrese el nuevo texto para la novedad: ") #texto editado
     hoy = date.today() #dia de hoy
-    fechaPublicacionNovedad0 = val_fecha(hoy,"publicar") #fecha editada
+    fechaPublicacionNovedad0 = val_fecha(hoy,"publicarse") #fecha editada
     fecha_formateada = datetime.strptime(fechaPublicacionNovedad0, "%Y-%m-%d").date() #darle formato _date YYYY-MM-DD
     fechaExpiracionNovedad0 = val_fecha(fecha_formateada,"expirar") #fecha editada
     
@@ -380,7 +380,7 @@ def edit_nov_1():  #editor novedad numero 2
     os.system("cls")
     textoNovedad1 = input("Ingrese el nuevo texto para la novedad: ")
     hoy = date.today()
-    fechaPublicacionNovedad1 = val_fecha(hoy,"publicar")
+    fechaPublicacionNovedad1 = val_fecha(hoy,"publicarse")
     fecha_formateada = datetime.strptime(fechaPublicacionNovedad1, "%Y-%m-%d").date()
     fechaExpiracionNovedad1 = val_fecha(fecha_formateada,"expirar")
 
@@ -399,7 +399,7 @@ def edit_nov_2():  #editor novedad numero 3
     os.system("cls")
     textoNovedad2 = input("Ingrese el nuevo texto para la novedad: ")
     hoy = date.today()
-    fechaPublicacionNovedad2 = val_fecha(hoy,"publicar")
+    fechaPublicacionNovedad2 = val_fecha(hoy,"publicarse")
     fecha_formateada = datetime.strptime(fechaPublicacionNovedad2, "%Y-%m-%d").date()
     fechaExpiracionNovedad2 = val_fecha(fecha_formateada,"expirar")
     
