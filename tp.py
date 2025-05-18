@@ -1,8 +1,17 @@
+'''Grupo Nro18
+integrantes:
+-Agustín Canedo
+-Franco Marinozzi
+-Agustín Leguiza
+-Leonardo Daniel Lugo Santeliz
+'''
 import msvcrt
 import os
 from datetime import date
 from datetime import datetime
+import time
 import calendar
+import sys
 
 '''cont_arg, cont_chi, cont_bra,codNovedad0,codNovedad1,codNovedad2, length_num, codNovedad, dia, mes, anio, fecha_comparar, dias_en_el_mes, hoy, fecha_formateada, intentos, valor_minimo, valor_maximo :integer
 claveUsuario,nombre_maximo, nombre_minino,nombres_maximos, nombres_mininos, nombreUsuario, textoNovedad0,textoNovedad1,textoNovedad2,fechaPublicacionNovedad0,fechaPublicacionNovedad1,fechaPublicacionNovedad2, fechaExpiracionNovedad0,fechaExpiracionNovedad1,fechaExpiracionNovedad2, last_option_letter, choice, nombre_aero,nombre_aero, codigoiata, descripcion, codigo_pais,fecha, codigo,header_cod, header_text, header_fecha_publi, header_fecha_expi, password, name,choice_menu, dia_ingreso, mes_ingreso, anio_ingreso, :string
@@ -56,7 +65,7 @@ def menu_admin_3(): #printeo del sub menu 3 del usurio tipo administrador
 
 def menu_admin_4(): #printeo del sub menu 4 del usurio tipo administrador
     os.system("cls")
-    print("a. Reporte de Ventas (reservas con estado “confirmada”)")
+    print("a. Reporte de Ventas")
     print("b. Reporte de Vuelos")
     print("c. Reporte de Usuarios")
     print("d. Volver")
@@ -141,25 +150,29 @@ def printeo_max_min():
     else:
         
         if(empate_maximo): #determinado los maximos igaules
-            nombres_maximos = nombre_maximo
-            if ("Argentina" != nombre_maximo and cont_arg == valor_maximo):
-                nombre_maximo += " y Argentina"
-            elif("Brasil" != nombre_maximo and cont_bra == valor_maximo):
-                nombre_maximo += " y Brasil"
-            elif("Chile" != nombre_maximo and cont_chi == valor_maximo):
-                nombre_maximo += " y Chile"
+            nombres_maximos = ""
+            if (cont_arg == valor_maximo):
+                nombres_maximos += "Argentina"
+            if(cont_bra == valor_maximo):
+                if nombres_maximos != "":
+                    nombres_maximos += " y "
+                nombres_maximos += "Brasil"
+            if(cont_chi == valor_maximo):
+                nombres_maximos += " y Chile"
                 
             print(f"Los paises con mas aerolineas son {nombres_maximos} y cuentan con: {valor_maximo} aerolines cada uno")
         else:
             print(f"El pais con mas aerolineas es {nombre_maximo} y cuenta con {valor_maximo} aerolineas")
             
         if(empate_minimo): #determinando los minimos iguales
-            nombres_minimos = nombre_minino
-            if ("Argentina" != nombre_minino and cont_arg == valor_minimo):
-                nombres_minimos += " y Argentina"
-            elif("Brasil" != nombre_maximo and cont_bra == valor_minimo):
-                nombres_minimos += " y Brasil"
-            elif("Chile" != nombre_minino and cont_chi == valor_minimo):
+            nombres_minimos = ""
+            if (cont_arg == valor_minimo):
+                nombres_minimos += "Argentina"
+            if(cont_bra == valor_minimo):
+                if nombres_minimos != "":
+                    nombres_minimos += " y "
+                nombres_minimos += "Brasil"
+            if(cont_chi == valor_minimo):
                 nombres_minimos += " y Chile"
                 
             print(f"Los paises con menor contidad de aerolineas son {nombres_minimos} y cuentan con {valor_minimo} aerolineas cada uno")
@@ -179,6 +192,7 @@ def crear_aero(): #creando aerolina
         nombre_aero = input("Ingrese el nombre de la aerolinea: ")
         if nombre_aero != "0":
             os.system("cls")
+            print("CANTIDAD MAXIMA DE CARACTERES: 3")
             codigoiata = input("Ingrese el Codigo IATA: ")
             while len(codigoiata) > 3 : #verificando que tenga maximo 3 caracteres
                 os.system("cls")
@@ -188,7 +202,7 @@ def crear_aero(): #creando aerolina
             descripcion = input("Ingrese una descripcion: ") #de momento la descripcion no tiene uso
             os.system("cls")
             print("Ingrese el codigo del pais")
-            codigo_pais = input("ARGENTINA = ARG , CHILE =CHI , Brasil = BRA\n").upper()
+            codigo_pais = input("ARGENTINA = ARG , CHILE = CHI , Brasil = BRA\n").upper()
             while codigo_pais != "ARG" and codigo_pais != "CHI" and codigo_pais != "BRA": #verificando que el operador escribio el codigo del pais correctamente
                 os.system("cls")
                 print("----- Codigo incorrecto -----\n")
@@ -275,15 +289,24 @@ def val_fecha(fecha_comparar,x):
     anio = 0
     while anio < fecha_comparar.year:
         os.system("cls")
+        if x == "publicarse":
+            print(f"----- La fecha tiene que ser superior o igual al dia de hoy {fecha_comparar} ------")
+        else:
+            print(f"----- La fecha tiene que ser superior o igual al dia de publicacion {fecha_comparar} -----")
         if cont>0:
             print("----- INGRESE UN AÑO VALIDO ------")
-        print("Ingresando fecha ", fecha)
+        print("----- Ingresando fecha -----")
         anio_ingreso = input(f"ingrese el año en que esta novedad va a {x}: ")
         aux = val_num(anio_ingreso)
-        while aux != True :
+        while aux != True:
             os.system("cls")
+            if x == "publicarse":
+                print(f"----- La fecha tiene que ser superior o igualal dia de hoy {fecha_comparar} ------")
+            else:
+                print(f"----- La fecha tiene que ser superior o igual al dia de publicacion {fecha_comparar} -----")
+            
             print("-----Ingrese un numero correcto ----")
-            print("Ingresando fecha ",fecha)
+            print("----- Ingresando fecha -----")
             anio_ingreso = input(f"ingrese el año en que esta novedad va a {x}: ")
             aux = val_num(anio_ingreso)
         anio = int(anio_ingreso)
@@ -297,24 +320,33 @@ def val_fecha(fecha_comparar,x):
     
     while mes < fecha_comparar.month or mes > 12:
         os.system("cls")
+        if x == "publicarse":
+            print(f"----- La fecha tiene que ser superior o igual al dia de hoy {fecha_comparar} ------")
+        else:
+            print(f"----- La fecha tiene que ser superior o igual al dia de publicacion {fecha_comparar} -----")
         if cont>0:
             print("----- INGRESE UN MES VALIDO ------")
-        print("Ingresando fecha ", fecha)
+        print("----- Ingresando fecha " + fecha + " -----")
         mes_ingreso = input(f"ingrese el mes en que esta novedad va a {x}: ")
         aux = val_num(mes_ingreso)
         while aux != True :
             os.system("cls")
+            if x == "publicarse":
+                print(f"----- La fecha tiene que ser superior o igualal dia de hoy {fecha_comparar} ------")
+            else:
+                print(f"----- La fecha tiene que ser superior o igual al dia de publicacion {fecha_comparar} -----")
+            
             print("-----Ingrese un numero correcto ----")
-            print("Ingresando fecha ",fecha)
+            print("----- Ingresando fecha " + fecha + " -----")
             mes_ingreso = input(f"ingrese el mes en que esta novedad va a {x}: ")
             aux = val_num(mes_ingreso)
         mes = int(mes_ingreso)
         cont += 1
     
-    if mes_ingreso.len() != 1:
+    if len(mes_ingreso) != 1:
         fecha += mes_ingreso + "-" 
     else:
-        fecha += +"0" + mes_ingreso + "-"
+        fecha += +"0" + str(mes_ingreso) + "-"
     
     #ahora el dia, se hace asi porque de esa manera el programa puede saber el mes y el año con cual comparar y asi evitar que el que queden fechas con dias como feb 31 xd 
     dia = 0
@@ -322,40 +354,40 @@ def val_fecha(fecha_comparar,x):
     dias_en_el_mes = calendar.monthrange(anio, mes)[1] #dias que contiene un mes en especifico
     while dia < fecha_comparar.day or dia > dias_en_el_mes :
         os.system("cls")
+        if x == "publicarse":
+            print(f"----- La fecha tiene que ser superior o igualal dia de hoy {fecha_comparar} ------")
+        else:
+            print(f"----- La fecha tiene que ser superior o igual al dia de publicacion {fecha_comparar} -----")
+            
         if cont>0:
             print("----- INGRESE UN DIA VALIDO ------")
-        print("Ingresando fecha ", fecha)
+        print("----- Ingresando fecha " + fecha + " -----")
         dia_ingreso = input(f"ingrese el dia en que esta novedad se va a {x}: ")
         aux = val_num(dia_ingreso)
         while aux != True :
+            if x == "publicarse":
+                print(f"----- La fecha tiene que ser superior o igualal dia de hoy {fecha_comparar} ------")
+            else:
+                print(f"----- La fecha tiene que ser superior o igual al dia de publicacion {fecha_comparar} -----")
+            
             os.system("cls")
             print("-----Ingrese un numero correcto ----")
-            print("Ingresando fecha ", fecha)
+            print("----- Ingresando fecha " + fecha + " -----")
             dia_ingreso = input(f"ingrese el dia en que esta novedad se va a {x}: ")
             aux = val_num(dia_ingreso)
         dia = int(dia_ingreso)
         cont += 1
-    if dia_ingreso.len() != 1:  
+    if len(dia_ingreso) != 1:  
         fecha += dia_ingreso
     else:
         fecha += "0" + dia_ingreso
     
     return fecha
-
-    
-              
+               
 def edit_nov_0(): #editor novedad numero 1
-    global codNovedad0, textoNovedad0, fechaPublicacionNovedad0, fechaExpiracionNovedad0
-    os.system("cls")
-    codigo = input("ingrese el nuevo numero de codigo de la novedad 1: ")
-    aux = val_num(codigo)
-    while aux != True or codigo == "0":
-        os.system("cls")
-        print("----- CODIGO ERRONEO ----")
-        codigo = input("ingrese el nuevo numero de codigo: ")
-        aux = val_num(codigo)
-    codNovedad0 = int(codigo) #codigo editado
+    global textoNovedad0, fechaPublicacionNovedad0, fechaExpiracionNovedad0
     
+    # Para evitar complejidad no se puede editar el codigo
     os.system("cls")
     textoNovedad0 = input("Ingrese el nuevo texto para la novedad: ") #texto editado
     hoy = date.today() #dia de hoy
@@ -366,17 +398,8 @@ def edit_nov_0(): #editor novedad numero 1
     
     
 def edit_nov_1():  #editor novedad numero 2
-    global codNovedad1, textoNovedad1, fechaPublicacionNovedad1, fechaExpiracionNovedad1
-    os.system("cls")
-    codigo = input("ingrese el nuevo numero de codigo de la novedad 1: ")
-    aux = val_num(codigo)
-    while aux != True or codigo == "0":
-        os.system("cls")
-        print("----- CODIGO ERRONEO ----")
-        codigo = input("ingrese el nuevo numero de codigo: ")
-        aux = val_num(codigo)
-    codNovedad1 = int(codigo) #codigo editado
-    
+    global textoNovedad1, fechaPublicacionNovedad1, fechaExpiracionNovedad1
+   
     os.system("cls")
     textoNovedad1 = input("Ingrese el nuevo texto para la novedad: ")
     hoy = date.today()
@@ -385,17 +408,8 @@ def edit_nov_1():  #editor novedad numero 2
     fechaExpiracionNovedad1 = val_fecha(fecha_formateada,"expirar")
 
 def edit_nov_2():  #editor novedad numero 3
-    global codNovedad2, textoNovedad2, fechaPublicacionNovedad2, fechaExpiracionNovedad2
-    os.system("cls")
-    codigo = input("ingrese el nuevo numero de codigo de la novedad 1: ")
-    aux = val_num(codigo)
-    while aux != True or codigo == "0":
-        os.system("cls")
-        print("----- CODIGO ERRONEO ----")
-        codigo = input("ingrese el nuevo numero de codigo: ")
-        aux = val_num(codigo)
-    codNovedad2 = int(codigo) #codigo editado
-    
+    global textoNovedad2, fechaPublicacionNovedad2, fechaExpiracionNovedad2
+
     os.system("cls")
     textoNovedad2 = input("Ingrese el nuevo texto para la novedad: ")
     hoy = date.today()
@@ -424,7 +438,7 @@ def show_nov(): #printeo de todas las novedades
 
 def choice_menu_ad_4 ():#menu reportes en construccion
     choice = " "
-    while choice != "e":
+    while choice != "d":
         menu_admin_4()
         choice = input("Ingrese una opcion: ").lower()
         aux = val_choice("d", choice)
@@ -438,19 +452,32 @@ def choice_menu_ad_4 ():#menu reportes en construccion
         if choice != "d":
             en_contruccion()      
 
-def ingreso_pass():
+def barra_progreso():
+    tamaño = 30
+    duracion=1
     os.system("cls")
+    print("Cargando...")
+
+    for i in range(tamaño + 1):
+        porcentaje = int((i / tamaño) * 100)
+        barra = "#" * i + "-" * (tamaño - i)
+        sys.stdout.write(f"\r[{barra}] {porcentaje}%")
+        sys.stdout.flush()
+        time.sleep(duracion / tamaño)
+
+
+def ingreso_pass():
     print("Ingrese su contraseña: ", end='', flush=True)
     password = ""
     aux_contra = True
     while aux_contra != False:
-        tecla = msvcrt.getch() #funcion que detecta la tecla que toca el operador
+        tecla = msvcrt.getch() #funcion que detecta la tecla que toca el operador 
             
         if tecla == b'\r':  # detecta el Enter
             aux_contra = False
         elif tecla == b'\x08':  # detecta el Backspace
             if len(password) > 0:# se verifica que existe por lo menos un digito
-                password = password[:-1] # borra el utlimo caracter de la cadena
+                password = password[:-1] # borra el ultimo caracter de la cadena
                 print('\b \b', end='', flush=True) #se borra el ultimo asterisco
         else:
             password += tecla.decode("utf-8") #tecla estaria en bits de los valores ascii, con decode('utf-8) pasa la letra que 
@@ -481,6 +508,7 @@ def main(): #funcion principal
             input("presiona cualquier tecla para continuar")
                
     if aux != False: #si el auxiliar es True se coloco bien tanto la contraseña como el correo y se prosigue con el programa
+        barra_progreso()
         choice_menu = ""
         while choice_menu != "5":
             menu_administrador()
