@@ -48,30 +48,27 @@ fechaExpiracionNovedad2 = "2025-04-11"
 
 #Opciones del menu y printeos de usuarios tipo administrador
 def menu_administrador():
-        choice_menu = ""
-        while choice_menu != "5":
+    choice_menu = ""
+    while choice_menu != "5":
+        menu_admin_print()
+        choice_menu = input("Ingrese una de las opciones: ")
+        while  choice_menu != "1" and choice_menu != "2" and choice_menu != "3" and choice_menu != "4" and choice_menu != "5" :
+            os.system("cls")
+            print("--- opcion invalida ---")
+            input("presiona cualquier tecla para continuar")
             menu_admin_print()
             choice_menu = input("Ingrese una de las opciones: ")
-            while  choice_menu != "1" and choice_menu != "2" and choice_menu != "3" and choice_menu != "4" and choice_menu != "5" :
-                os.system("cls")
-                print("--- opcion invalida ---")
-                input("presiona cualquier tecla para continuar")
-                menu_admin_print()
-                choice_menu = input("Ingrese una de las opciones: ")
 
-            match choice_menu:
-                case "1":
-                    choice_menu_ad_1 () #yendo a la toma de deciciones del menu 1
-                case "2":
-                    en_contruccion()
-                case "3":
-                    choice_menu_ad_3 () #yendo a la toma de deciciones del menu 3
-                case "4":
-                    choice_menu_ad_4 () #yendo a la toma de deciciones del menu 4
-                
-                case "5":
-                    os.system("cls") # salir menu administrador
-  
+        match choice_menu:
+            case "1":
+                choice_menu_ad_1 () #yendo a la toma de deciciones del menu 1
+            case "2":
+                en_contruccion()
+            case "3":
+                choice_menu_ad_3 () #yendo a la toma de deciciones del menu 3
+            case "4":
+                choice_menu_ad_4 () #yendo a la toma de deciciones del menu 4
+
 def menu_admin_print(): #printeo del menu de usuario tipo administrador
     os.system("cls")
     print("1. Gestión de Aerolíneas")
@@ -718,11 +715,11 @@ def bus_sec(X, buscar): #busqueda secuencial
         pos = -1 #sino, -1
     return pos    
 
-def main(): #funcion principal
+
+
+def login(): #inicio de sesion
     intentos = 3 #intentos de ingreso de contraseña
     aux = False
-    
-    
     while aux != True and intentos > 0 : #no se sale de while hasta que se terminen los intentos, es decir, intentos == 0, o se coloque bien la contraseña
         os.system("cls")
         print(f"cantidad de intentos restantes: {intentos}")
@@ -751,21 +748,12 @@ def main(): #funcion principal
                     menu_ceo()
                 case "usuario":
                     menu_usario()
-            
-            os.system("cls")
-            answer = ""
-            while answer != "NO" and answer != "SI":
-                print("Desea volver al menu login? respuestas posibles: si/no")
-                answer = input().upper()
-            if answer != "NO":
-                intentos = 3
-                aux = False
-                
+
     if intentos == 0:
         os.system("cls")
         print("--- Limite de intentos alcanzados ---")
-    
-    print("Hasta luego!")
+        input()
+
         
 def  CargaUsuarios ():
     
@@ -793,6 +781,32 @@ def  CargaUsuarios ():
     USUARIOS[1][7] = "usuario2@ventaspasajes777.com"
     USUARIOS[2][7] = "usuario456"
     USUARIOS[3][7] = "usuario"   
+ 
+def inicio_print():
+    os.system("cls")
+    print("1. Registrarme ")
+    print("2. Iniciar Sesión")
+    print("3. Salir")
+    
+def main():
+    choice_menu = ""
+    while choice_menu != "3":
+        inicio_print()
+        choice_menu = input("Ingrese una de las opciones: ")
+        while  choice_menu != "1" and choice_menu != "2" and choice_menu != "3":
+            os.system("cls")
+            print("--- opcion invalida ---")
+            input("presiona cualquier tecla para continuar")
+            inicio_print()
+            choice_menu = input("Ingrese una de las opciones: ")
+
+        match choice_menu:
+            case "1":
+                en_contruccion()
+            case "2":
+                login()
+        
+    print("Hasta luego!")
   
 CargaUsuarios()  
 main()
