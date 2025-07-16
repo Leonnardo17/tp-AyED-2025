@@ -12,6 +12,7 @@ from datetime import datetime
 import time
 import calendar
 import sys
+from colorama import Fore, Style
 
 '''cont_arg, cont_chi, cont_bra,codNovedad0,codNovedad1,codNovedad2, length_num, codNovedad, dia, mes, anio, fecha_comparar, dias_en_el_mes, hoy, fecha_formateada, intentos, valor_minimo, valor_maximo :integer
 claveUsuario,nombre_maximo, nombre_minino,nombres_maximos, nombres_mininos, nombreUsuario, textoNovedad0,textoNovedad1,textoNovedad2,fechaPublicacionNovedad0,fechaPublicacionNovedad1,fechaPublicacionNovedad2, fechaExpiracionNovedad0,fechaExpiracionNovedad1,fechaExpiracionNovedad2, last_option_letter, choice, nombre_aero,nombre_aero, codigoiata, descripcion, codigo_pais,fecha, codigo,header_cod, header_text, header_fecha_publi, header_fecha_expi, password, name,choice_menu, dia_ingreso, mes_ingreso, anio_ingreso, :string
@@ -25,7 +26,7 @@ tipoUsuario = [""] *TAMUSER
 claveUsuario = [""] *TAMUSER
 nombreUsuario = [""]*TAMUSER
 codUsuarios = [0]*TAMUSER
-USUARIOS = [codUsuarios, nombreUsuario,claveUsuario, tipoUsuario, emailUsuario, telefonoUsuario]
+USUARIOS = [codUsuarios, nombreUsuario,claveUsuario, tipoUsuario, emailUsuario, telefonoUsuario] #una buena forma de entender la forma en que se organizan es verlo una tabla y cada variable es una columna y el segundo indice seria las filas
 
 cont_arg = 0
 cont_chi = 0
@@ -210,6 +211,8 @@ def edit_nov():
                 print("ingresando 0 sale de la edicion de novedades")
                 input(" ")
  
+# Simplificar y hacer una sola edit_nov() 
+
 def edit_nov_0(): #editor novedad numero 1
     global textoNovedad0, fechaPublicacionNovedad0, fechaExpiracionNovedad0
     
@@ -460,8 +463,9 @@ def menu_reservas():
 
 def en_contruccion():
     os.system("cls")
-    print("--- En construccion ---")
+    print(Fore.GREEN + "--- En construccion ---")
     input("presiona cualquier tecla para continuar")
+    print(Style.RESET_ALL)
 
 def val_choice(last_option_letter, choice): #verificando si los inputs de las selecciones de los menus estan dentro de los correspondiente
     aux = False
@@ -697,22 +701,20 @@ def ingreso_pass():
             print('*', end='', flush=True) # se printean los asteriscos en vez de las letras
     return password
   
-def bus_sec(X, buscar): #busqueda secuencial
-    column = 0
-    row = 0
-    cantColumns = len(X)-1
-    cantRows = len(X[0])-1
-    while X[column][row] != buscar and column < cantColumns:
-        row = 0
-        column += 1
-        while X[column][row] != buscar and row < cantRows:
-            row+= 1 
-        
-    
-    if X[column][row] == buscar:
-        pos = row # si en cuentra, devuelve la posicion de la fila
-    else:
-        pos = -1 #sino, -1
+def bus_sec(X, buscar): #busqueda secuencial bidimensional
+    cantColumns = len(X)
+    cantRows = len(X[0])
+    pos = -1
+    i = -1 #en este caso i refiere a las filas y empieza en menos uno para poder sumarle 1 cada vez que entre al while
+    while pos == -1 and i < cantRows-1: # solo sale si consigue el item o ya recorrio toda las posiciones del array
+        i+= 1
+        j = 0 #j refiere a las columnas
+        while X[j][i] != buscar and j < cantColumns-1:
+            j +=1
+            
+        if X[j][i] == buscar:
+            pos = i
+            
     return pos    
 
 
@@ -756,28 +758,44 @@ def login(): #inicio de sesion
 
         
 def  CargaUsuarios ():
-    
-    USUARIOS[0][0] = 0
+    #carga admin
+    USUARIOS[0][0] = 1
     USUARIOS[1][0] = "admin@ventaspasajes777.com"
     USUARIOS[2][0] = "admin123"
     USUARIOS[3][0] = "administrador"
-    
-    USUARIOS[0][1] = 1
+    #carga 5 ceos
+    USUARIOS[0][1] = 2
     USUARIOS[1][1] = "ceo1@ventaspasajes777.com"
     USUARIOS[2][1] = "ceo123"
     USUARIOS[3][1] = "ceo"
     
-    USUARIOS[0][2] = 2
+    USUARIOS[0][2] = 3
     USUARIOS[1][2] = "ceo2@ventaspasajes777.com"
     USUARIOS[2][2] = "ceo456"
     USUARIOS[3][2] = "ceo"
     
-    USUARIOS[0][6] = 6
+    USUARIOS[0][3] = 4
+    USUARIOS[1][3] = "ceo3@ventaspasajes777.com"
+    USUARIOS[2][3] = "ceo789"
+    USUARIOS[3][3] = "ceo"
+    
+    USUARIOS[0][4] = 5
+    USUARIOS[1][4] = "ceo4@ventaspasajes777.com"
+    USUARIOS[2][4] = "ceo012"
+    USUARIOS[3][4] = "ceo"
+
+    USUARIOS[0][5] = 6
+    USUARIOS[1][5] = "ceo5@ventaspasajes777.com"
+    USUARIOS[2][5] = "ceo345"
+    USUARIOS[3][5] = "ceo"
+    
+    #carga 2 usuarios
+    USUARIOS[0][6] = 7
     USUARIOS[1][6] = "usuario1@ventaspasajes777.com"
     USUARIOS[2][6] = "usuario123"
     USUARIOS[3][6] = "usuario"
     
-    USUARIOS[0][7] = 7
+    USUARIOS[0][7] = 8
     USUARIOS[1][7] = "usuario2@ventaspasajes777.com"
     USUARIOS[2][7] = "usuario456"
     USUARIOS[3][7] = "usuario"   
@@ -787,6 +805,43 @@ def inicio_print():
     print("1. Registrarme ")
     print("2. Iniciar Sesión")
     print("3. Salir")
+    
+def sign_up():
+    pos = bus_sec(USUARIOS,0) #verificando que existan espacios disponibles y recuperando la posicion si es necesario
+    new_pass = " "
+    new_user = " "
+    if pos != -1 and new_user != "*" and new_pass != "*":
+        os.system("cls")
+        print("------ Ingresando * cancela la operacion -----")
+        new_user = input("Ingrese un Usuario: ")
+        pos_repeat = bus_sec(USUARIOS,new_user)
+        while pos_repeat != -1 and new_user != "*":
+            os.system("cls")
+            print("---- Usuario ya registrado ----")
+            print("------ Ingresando * cancela la operacion -----")
+            new_user = input("Ingrese un Usuario: ")
+            pos_repeat = bus_sec(USUARIOS,new_user)
+            
+        if new_user != "*":
+            os.system("cls")
+            print("------ Ingresando * cancela la operacion -----")
+            new_pass = input("ingrese una contraseña: ")
+            while len(new_pass) < 4 and new_pass != "*":
+                os.system("cls")
+                print("---- caracteres minimos ----")
+                print("------ Ingresando * cancela la operacion -----")
+                new_pass = input("ingrese una contraseña: ")
+
+        if new_user != "*" and new_pass !="*":
+            USUARIOS[0][pos] = USUARIOS[0][pos-1] + 1
+            USUARIOS[1][pos] = new_user
+            USUARIOS[2][pos] = new_pass
+            USUARIOS[3][pos] = "usuario"
+    elif pos == -1:
+        os.system("cls")
+        input(Fore.RED + "Memoria llena")
+        print(Style.RESET_ALL)
+        
     
 def main():
     choice_menu = ""
@@ -802,7 +857,7 @@ def main():
 
         match choice_menu:
             case "1":
-                en_contruccion()
+                sign_up()
             case "2":
                 login()
         
